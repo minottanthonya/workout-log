@@ -13,11 +13,9 @@ User.sync(); // User({ force: true }); //drops the table compeletly (line 27ish)
 // The app starts!
 app.use(bodyParser.json());
 
-app.use(bodyParser.json());
-
 app.use(require('./middleware/headers'));
 
-app.use('api/user', require('./routes/user'));
+app.use('/api/user', require('./routes/user'));
 
 app.use('/api/test', function(req, res){
 	res.send("Hello World");
