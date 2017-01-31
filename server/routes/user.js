@@ -1,30 +1,35 @@
 var router = require('express').Router();
 var sequelize = require('../db.js');
-var User = sequelize.import('../models/user');
+var User = sequelize.import('../models/user.js');
+var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
 
 router.post('/', function(req, res){
-	//when we post to api user, it will want a user object in the body
-	var username = req.body.user.username;
-	var pass = req.body.user.password;	//TODO: hash this password - HASH=not human readable
-
-	//Match the model we create above
-	//Sequelize - take the user model and go out to the db and create this:
-	User.create({
-		username: username,
-		passwordhash: ''
-	}).then(
-		//Sequelize is going to return the object it created from db.
-		function createSuccess(user){
-			//successful get thsi:
-			res.json({
-				user: user,
-				message: 'create'
-			});
-		},
-		function createError(err){
-			res.send(500, err.message);
-		}
-	);
-});
+	User.findOne({where:{username:req.body.user.username}}).then(
+		function(user){
+			if(user){
+				bcrypt.compare(req.body.user.password, user.passwordhash, function(err,matchers){
+					if(matches){
+						var token=jwt.sign({id:iser.id}, "i_am_secret", {expiresIn:60*60*24});
+							res.json({
+								user:user,
+								message:"successfully authenticated",
+								sessionToken:token
+							});
+					}else{
+					res.status(500).send({error:"failed to authenticate"});
+					}
+						});
+					}else{
+						res.status(500).send({error:"failed to authenticate"});
+					}
+				},
+				function(err){
+					res.json(err);
+			}
+		);
+	});
 
 module.exports = router;
+
+	
