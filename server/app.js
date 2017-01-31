@@ -1,35 +1,27 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var Sequelize = require('sequelize');
+var sequelize = require('./db.js');
+var User = sequelize.import('./models/user');
 
-var sequelize = new Sequelize('workoutlog', 'postgres', 'Tigersrock21', {
-	host: 'localhost',
-	dialect: 'postgres'
-});
-
-sequelize.authenticate().then(
-	function() {
-		console.log('connected to workoutlog postgres db');
-	},
-	function(err){
-		console.log(err);
-	}
-);
-
-// build a user model in sqllize
-var User = sequelize.define('user', {
-	username: Sequelize.STRING,
-	passwordhash: Sequelize.STRING,
-});
 
 //creates the table in postgres
 //matches the model we defined
 //Doesn't drop the db
-User.sync(); 
-// User({ force: true }); //drops the table compeletly (line 27ish)
+User.sync(); // User({ force: true }); //drops the table compeletly (line 27ish)
 
+// The app starts!
 app.use(bodyParser.json());
+
+app.use(require('./middleware/headers'));
+
+app.use('/api/test', function(req, res){
+	res.send("Hello World");
+});
+
+app.listen(3000, function(){
+	console.log("app is listening on port 3000");
+});
 
 app.post('/api/user', function(req, res){
 	//when we post to api user, it will want a user object in the body
@@ -54,14 +46,4 @@ app.post('/api/user', function(req, res){
 			res.send(500, err.message);
 		}
 	);
-});
-
-app.use(require('./middleware/headers'));
-
-app.use('/api/test', function(req, res){
-	res.send("Hello World");
-});
-
-app.listen(3000, function(){
-	console.log("app is listening on port 3000");
 });
