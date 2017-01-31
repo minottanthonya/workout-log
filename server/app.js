@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var sequelize = require('./db.js');
-var User = sequelize.import('./models/user');
+var User = sequelize.import('./models/user.js');
 
 
 //creates the table in postgres
