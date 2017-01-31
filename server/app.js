@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -6,7 +8,7 @@ var User = sequelize.import('./models/user.js');
 
 
 //creates the table in postgres
-//matches the model we defined
+//matches the model we
 //Doesn't drop the db
 User.sync(); // User({ force: true }); //drops the table compeletly (line 27ish)
 
@@ -14,6 +16,7 @@ User.sync(); // User({ force: true }); //drops the table compeletly (line 27ish)
 app.use(bodyParser.json());
 
 app.use(require('./middleware/headers'));
+app.use(require('./middleware/validate-session'));
 
 app.use('/api/user', require('./routes/user'));
 
