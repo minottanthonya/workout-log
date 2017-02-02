@@ -29,6 +29,9 @@ app.use('/api/login', require('./routes/session'));
 //definition route
 app.use('/api/definition', require('./routes/definition'));
 
+//log route
+app.use('/api/log', require('./routes/log'));
+
 app.use('/api/test', function(req, res){
 	res.send("Hello World");
 });
