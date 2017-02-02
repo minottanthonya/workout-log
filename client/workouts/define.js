@@ -1,5 +1,5 @@
 $(function(){
-	$.extend(Workoutlog, {
+	$.extend(WorkoutLog, {
 		definition: {
 			userDefinition: [],
 
@@ -11,14 +11,16 @@ $(function(){
 				var postData = { definition: def};
 				var define = $.ajax({
 					type:"POST",
-					url:Workoutlog.API_BASE + "definition",
+					url:WorkoutLog.API_BASE + "definition",
 					data:JSON.stringify(postData),
 					contentType:"application/json"
 				});
 				
 				define.done(function(data){
-
-			Workoutlog.definition.userDefinitions.push(data.definition);		
+					WorkoutLog.definition.userDefinitions.push(data.definition);		
+					$("#def-description").val("");
+					$("#def-logtype").val("");
+					$('a[href="#log"]').tab("show");
 				});
 
 
@@ -27,7 +29,7 @@ $(function(){
 			fetchAll: function() {
 					var fetchdefs = $.ajax({
 					type:"GET",
-					url:Workoutlog.API_BASE + "definition",
+					url:WorkoutLog.API_BASE + "definition",
 					headers: {
 						"authorization": window.localStorage.getItem("sessionToken")
 					}
@@ -41,11 +43,11 @@ $(function(){
 		}
 	});
 	// bindings
-	$("#def-save").on("click", Workoutlog.definition.create);
+	$("#def-save").on("click", WorkoutLog.definition.create);
 	// fetch definitions if we already are
 	// authenticated and refreshed
 	if (window.localStorage.getItem("sessionToken")) {
-		Workoutlog.definition.fetchAll();
+		WorkoutLog.definition.fetchAll();
 	}
 
 });

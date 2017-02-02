@@ -3,11 +3,11 @@ $(function(){
 		log: {
 			workouts: [],
 			setDefinitions: function() {
-				var defs = WorkoutLog.definition.userDefinitions;
+				var defs = WorkoutLog.definition.userDefinition;
 					var len = defs.length;
 					var opts;
 					for (var i = 0; i < len; i++) {
-						opts += "<option valie='" + defs[i].id +"'>" + defs[i].description + "</option>";
+						opts += "<option value='" + defs[i].id +"'>" + defs[i].description + "</option>";
 					}
 					$("#log-definition").children().remove();
 					$("#log-definition").append(opts);
@@ -30,7 +30,7 @@ $(function(){
 					def: $("#log-definition option:selected").text()
 					};
 					var postData = { log: itsLog };
-					var logger -$.ajax({
+					var logger = $.ajax({
 						type:"POST",
 						url: WorkoutLog.API_BASE + "log",
 						data: JSON.stringify(postData),
@@ -39,6 +39,9 @@ $(function(){
 
 					logger.done(function(data){
 						WorkoutLog.log.workouts.push(data);
+						$("#log-description").val("");
+						$("#log-result").val("");
+						$('a[href="#history"]').tab("show");
 					});
 			
 			},
@@ -47,8 +50,7 @@ $(function(){
 					type: "GET",
 					url: WorkoutLog.API_BASE + "log",
 					headers: {
-						"authorization";
-					window.localStorage.getItem("sessionToken")
+						"authorization": window.localStorage.getItem("sessionToken")
 						}
 					})	
 					.done(function(data){
@@ -66,6 +68,6 @@ $(function(){
 			if (window.localStorage.getItem("sessionToken")){
 					WorkoutLog.log.fetchAll();
 			}
-};
+});
 
 				
