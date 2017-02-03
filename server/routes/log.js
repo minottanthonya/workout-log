@@ -4,7 +4,7 @@ var Log = sequelize.import('../models/log');
 var User = sequelize.import('../models/user');
 var Definition = sequelize.import('../models/definition')
 
-router.post('/', function(req, res){
+router.post('/', function(req, res) {
 	// req has some body properties that have a username and pwd
 	var description = req.body.log.description;
 	var result = req.body.log.result;
@@ -17,7 +17,7 @@ router.post('/', function(req, res){
 			description: description,
 			result: result,
 			ower: user.id,
-			def.definition
+			def: definition
 		})
 		.then(
 			function createSuccess(log){
@@ -30,7 +30,7 @@ router.post('/', function(req, res){
 		);
 });
 
-router.get('/', function(req,res) {
+router.get('/', function(req, res) {
 	var userid = req.user.id;
 	Log
 	.findAll({

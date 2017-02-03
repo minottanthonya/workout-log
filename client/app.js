@@ -79,6 +79,17 @@ $(function(){
 			}
 	});	
 
+	 $(document).on("keypress", function(e) {
+      if (e.which === 13) { // enter key
+         if ($("#signup-modal").is(":visible")) {
+            $("#signup").trigger("click");
+         }
+         if ($("#login-modal").is(":visible")) {
+            $("#login").trigger("click");
+         }
+      }
+   });
+
 	// setHeader if we
 	var token = window.localStorage.getItem("sessionToken");
 	if (token) {

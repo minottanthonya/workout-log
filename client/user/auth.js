@@ -33,7 +33,7 @@ $(function(){
 				$(".disabled").removeClass("disabled");
 				$("#loginout").text("Logout");
 				console.log("Great job signing up!");
-				$("$su_username").val("");
+				$("#su_username").val("");
 				$("#su_password").val("");
 				$('a[href="#define"]').tab("show");
 				//routing
