@@ -41,6 +41,9 @@ $(function(){
 			WorkoutLog.log.setDefinitions();
 		}
 
+     	if (target === "#update-log") {
+        	WorkoutLog.log.setDefinitions();
+     	 }
 		if (target === "#history") {
 			WorkoutLog.log.setHistory();
 		}
@@ -64,20 +67,6 @@ $(function(){
 	}
 
 	window.WorkoutLog = WorkoutLog;
-
-
-	// bind tab change events
-		// bootstrap tab --> binding to a bootstrap event
-	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-		var target =$(e.target).attr("href"); //activated tab
-			if (target === "#log"){
-				WorkoutLog.log.setDefinitions();
-			}
-
-			if (target === "#history") {
-				WorkoutLog.log.setHistory();
-			}
-	});	
 
 	 $(document).on("keypress", function(e) {
       if (e.which === 13) { // enter key
